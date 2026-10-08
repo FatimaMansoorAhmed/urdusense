@@ -92,7 +92,7 @@ def main():
     
     # Push directly to Hugging Face Hub
     # UPDATE THIS WITH YOUR ACTUAL HUGGING FACE USERNAME!
-    HF_REPO = "FatimaMansoorAhmed/urdusense-xlmr" 
+    HF_REPO = "FatimaFM26/urdusense-xlmr" 
     
     print(f"\nModel ko Hugging Face Hub par push kar rahe hain: {HF_REPO}")
     trainer.model.push_to_hub(HF_REPO, private=True)

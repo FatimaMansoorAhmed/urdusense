@@ -2,7 +2,7 @@
 
 **Sentiment + toxicity analysis for Urdu and Roman Urdu, with token-level explanations.**
 
-UrduSense is an end-to-end NLP app that takes Urdu (نستعلیق) or Roman Urdu text, classifies its **sentiment** and **toxicity**, and highlights *which words* drove the prediction, so results are explainable rather than a black box.
+UrduSense is an end-to-end NLP app that takes Roman Urdu text, classifies its **sentiment** and **toxicity**, and highlights *which words* drove the prediction, so results are explainable rather than a black box.
 ---
 
 ## ✨ Features

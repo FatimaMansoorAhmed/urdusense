@@ -128,8 +128,6 @@ python ml/src/export_onnx.py
 python ml/src/predict.py "yeh movie bohat kamaal ki thi"
 ```
 
-Hyperparameters: `lr=<>`, `batch_size=<>`, `epochs=<>`, `max_len=<>`
-
 ## ⚠️ Limitations
 
 - Roman Urdu has no standard spelling, so uncommon variants may be misclassified

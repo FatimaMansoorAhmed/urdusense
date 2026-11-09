@@ -2,7 +2,7 @@
 
 **Sentiment + toxicity analysis for Urdu and Roman Urdu, with token-level explanations.**
 
-UrduSense is an end-to-end NLP app that takes Roman Urdu text, classifies its **sentiment** and **toxicity**, and highlights *which words* drove the prediction, so results are explainable rather than a black box.
+UrduSense is an end-to-end NLP app that takes Urdu (نستعلیق) or Roman Urdu text, classifies its **sentiment** and **toxicity**, and highlights *which words* drove the prediction, so results are explainable rather than a black box.
 ---
 
 ## ✨ Features
@@ -29,12 +29,13 @@ Input text → Normalization → XLM-R tokenizer → Fine-tuned XLM-R
 | Preprocessing | Roman Urdu normalization (spelling variants, e.g. *acha / achha / accha*) |
 
 
+
 ## 🛠️ Tech Stack
 
-- **ML:** PyTorch, Hugging Face Transformers, Scikit-learn
+- **ML:** PyTorch, Hugging Face Transformers, ONNX / ONNX Runtime
 - **Backend:** FastAPI, Uvicorn, Pydantic
 - **Frontend:** Next.js, React, Tailwind CSS
-- **Deployment:** `<Docker / Vercel / Render / HF Spaces>`
+- **Deployment:** Hugging Face Spaces (API + Gradio UI), `<Vercel for frontend?>`
 
 ## 🚀 Getting Started
 
@@ -44,7 +45,7 @@ Input text → Normalization → XLM-R tokenizer → Fine-tuned XLM-R
 
 ### 1. Clone
 ```bash
-git clone https://github.com/<username>/urdusense.git
+git clone https://github.com/FatimaMansoorAhmed/urdusense.git
 cd urdusense
 ```
 
@@ -54,7 +55,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 API runs at `http://localhost:8000` · Docs at `http://localhost:8000/docs`
 
@@ -66,7 +67,7 @@ npm run dev
 ```
 App runs at `http://localhost:3000`
 
-> Model weights: `<download link / auto-downloaded from Hugging Face Hub: username/urdusense>`
+
 
 ## 📡 API Usage
 
@@ -97,25 +98,34 @@ curl -X POST http://localhost:8000/analyze \
 ```
 urdusense/
 ├── backend/
-│   ├── app/
-│   │   ├── main.py          # FastAPI entrypoint
-│   │   ├── model.py         # Model loading + inference
-│   │   ├── explain.py       # Token attribution
-│   │   └── schemas.py       # Pydantic models
-│   └── requirements.txt
-├── frontend/                # Next.js app
-├── notebooks/               # Training + evaluation
-├── docs/
+│   └── main.py              # FastAPI app (inference API)
+├── frontend/                # Next.js app (app router, TypeScript)
+│   └── app/utils/api.js     # API client for the backend
+├── ml/
+│   ├── data/                # Datasets
+│   ├── models/              # Fine-tuned model artifacts
+│   ├── notebooks/           # Training + evaluation
+│   └── src/
+│       ├── export_onnx.py   # Export fine-tuned model to ONNX
+│       └── predict.py       # Inference script
+├── space-repo/              # Hugging Face Space deployment (FastAPI + Gradio)
+│   ├── space_app.py
+│   ├── requirements.txt
+│   └── README.md
 └── README.md
 ```
 
 ## 🏋️ Training
 
 ```bash
-cd notebooks
-# 1. Data prep:   01_data_preparation.ipynb
-# 2. Fine-tuning: 02_finetune_xlmr.ipynb
-# 3. Evaluation:  03_evaluation.ipynb
+cd ml/notebooks
+# Run the notebooks in order: data prep → fine-tuning → evaluation
+```
+
+Export the trained model to ONNX for lightweight inference:
+```bash
+python ml/src/export_onnx.py
+python ml/src/predict.py "yeh movie bohat kamaal ki thi"
 ```
 
 Hyperparameters: `lr=<>`, `batch_size=<>`, `epochs=<>`, `max_len=<>`
@@ -126,11 +136,4 @@ Hyperparameters: `lr=<>`, `batch_size=<>`, `epochs=<>`, `max_len=<>`
 - Sarcasm and heavy code-mixing remain difficult
 - Toxicity labels reflect the training dataset's annotation biases
 - Not intended for automated moderation without human review
-
-## 🗺️ Roadmap
-
-- [ ] Add emotion classification
-- [ ] Batch / CSV upload
-- [ ] Browser extension
-- [ ] Larger Roman Urdu training corpus
 

@@ -28,14 +28,6 @@ Input text → Normalization → XLM-R tokenizer → Fine-tuned XLM-R
 | Explainability | `<method: e.g. Integrated Gradients / SHAP / attention>` |
 | Preprocessing | Roman Urdu normalization (spelling variants, e.g. *acha / achha / accha*) |
 
-## 📊 Results
-
-| Task | Accuracy | Macro-F1 |
-|---|---|---|
-| Sentiment | `XX.X%` | `XX.X%` |
-| Toxicity | `XX.X%` | `XX.X%` |
-
-**Dataset:** `<dataset names / sources, size, train-val-test split>`
 
 ## 🛠️ Tech Stack
 
